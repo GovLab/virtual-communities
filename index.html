@@ -25,7 +25,7 @@
 <meta name="twitter:image" content="case/images/ss.png" />
 
 
-    <title>Collective Intelligence Case Studies</title>
+    <title>The Power of Virtual Communities</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.typekit.net/kwv5eho.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -74,17 +74,19 @@
                         <p id="title">{{project.title}}</p>
                         <p>{{project.headline}}</p>
                         <div class="tag-section">
+
+                            <div class="tag-row owner">
+                                <p>Group size: <span v-html="project.number_of_members"></span></p>
+                            </div>
+                            <div class="tag-row owner">
+                                <p>Founded: <span v-html="project.founding_year"></span></p>
+                            </div>
                             <div class="tag-row">
                                 <span id="location-icon" class="material-icons"> location_on</span>
                                 <div class="tag-col"  v-if="project.location">
                                     <p><span class="tag region-tag">{{project.location}}</span></p>
                                 </div>
                             </div>
-                            <!-- <div class="tag-row owner">
-                                <p>Owner: <span v-html="project.owner"></span></p>
-                              
-                            </div> -->
-
                         </div>
 
                     </div>

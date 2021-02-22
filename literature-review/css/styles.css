@@ -271,10 +271,10 @@ padding: 0 10rem;
   padding: 4rem 0;
 }
 .case-text{
-  padding: 2rem 12rem;
+  padding: 2rem 25rem;
 }
 .case-end-notes{
-  padding: 2rem 15rem;
+  padding: 2rem 25rem;
 }
 .case-biblio{
   padding: 2rem 8rem;
@@ -318,24 +318,42 @@ font-weight: 300 !important;
 }
 .case-text p{
   line-height: 2 !important;
-  font-size: 1rem !important;
+  font-size: 1.1rem !important;
   font-weight: 400 !important;
 }
-.case-text h2{
+.case-text h3{
   line-height: 2 !important;
-  font-size: 1.1rem !important;
+  font-size: 1.3rem !important;
   font-weight: 600 !important;
   color: var(--main-color);
   text-transform: uppercase;
   margin:0;
   padding-top: 2rem;
 }
-.case-text h3{
+.case-text h4{
+  line-height: 2 !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  color: var(--main-color);
+  text-transform: uppercase;
+  margin:0;
+  padding-top: 2rem;
+}
+.case-text h5{
   line-height: 2 !important;
   font-size: 1.1rem !important;
   font-weight: 600 !important;
-  color: var(--secondary-color);
+  color: var(--main-color);
   margin:0;
+  padding-top: 2rem;
+}
+.case-text h6{
+  line-height: 2 !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: var(--main-color);
+  margin:0;
+  padding-top: 0rem;
 }
 .case-text sup{
   font-size: 0.8rem;
@@ -351,11 +369,17 @@ font-weight: 300 !important;
 }
 .case-text ol li{
   line-height: 2;
-  font-size: 1rem;
-  font-weight: 400 !important;
+  font-size: 1.1rem !important;
+  font-weight: 400;
 }
-.case-text ol{
-  margin-left: 2rem;
+.case-text ul li{
+  line-height: 2;
+  font-size: 1.1rem !important;
+  font-weight: 400;
+}
+.case-text ol,ul{
+  margin-left: 0rem;
+  padding-left:1rem;
 }
 .case-text h6{
   font-weight: 500;

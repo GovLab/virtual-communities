@@ -685,7 +685,7 @@ img.project-img{
 
   }
   .project-card .project-text.small{
-    height: 120px;
+    height: 200px;
   
     }
   .project-card .project-text p{
@@ -722,7 +722,7 @@ display: flex;
 flex-flow: row wrap;
 justify-content: left;
 align-items: center;
-margin: 0.25rem 0;
+margin: 0rem 0;
 }
 .tag-col{
   display:flex;
@@ -736,6 +736,10 @@ margin: 0.25rem 0;
 .tag-row.owner p{
   font-size: 1rem;
   font-weight: 600;
+}
+.tag-row.owner p span{
+  font-size: 1rem;
+  font-weight: 400;
 }
 .tag{
   color: #ffffff;
