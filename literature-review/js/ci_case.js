@@ -31,7 +31,7 @@ new Vue({
     return {
       indexData: [],
       newData: [],
-      apiURL: 'https://directus.thegovlab.com/ci_cases',
+      apiURL: 'https://directus.thegovlab.com/virtual-communities',
 
     }
   },
@@ -45,20 +45,21 @@ new Vue({
       self = this;
       const client = new DirectusSDK({
         url: "https://directus.thegovlab.com/",
-        project: "ci_cases",
+        project: "virtual-communities",
         storage: window.localStorage
       });
 
       client.getItems(
-  'litreview',
+  'lit_review',
   {
     fields: ['*.*']
   }
 ).then(data => {
   self.indexData = data.data;
+  self.newData = data.data;
   console.log(this.indexData);
-  self.newData =  self.indexData[0].text_body.replaceAll("applewebdata://AACC4B4A-BFE3-49A6-8DF0-420462282428","");
-  self.newData =  self.newData.replaceAll("</sup>","</sup></a>");
+  // self.newData =  self.indexData[0].text_body.replaceAll("applewebdata://AACC4B4A-BFE3-49A6-8DF0-420462282428","");
+  // self.newData =  self.newData.replaceAll("</sup>","</sup></a>");
   console.log(newData);
 })
 .catch(error => console.error(error));
