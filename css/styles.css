@@ -1032,16 +1032,19 @@ header.project-header{
     margin-top:1rem;
     padding: 3rem 1rem;
   }
-.project-list{
 
-}
   .project-item{
     -webkit-flex: 0 0 50%;
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
   }
-
+  .report-item{
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
   .stay-connected{
     padding: 2rem 1rem;
   }
@@ -1111,7 +1114,7 @@ header.project-header{
   .hero{
     padding: 0rem 2rem;
     flex-direction: column;
-    height: 80vh;
+    height: 40vh;
   }
   .hero.reports-hero{
     height: 40vh;
