@@ -31,6 +31,7 @@ new Vue({
       indexData: [],
       filterData: [],
       reportData:[],
+      aboutData:[],
       exec_summary:[],
       teamData:[],
       selectedProjectType: null,
@@ -46,6 +47,7 @@ new Vue({
     this.fetchReports();
     this.fetchSummary();
     this.fetchTeam();
+    this.fetchAbout();
     this.toggleMessage();
   },
   methods: {
@@ -68,6 +70,27 @@ new Vue({
 
         self.indexData = data.data;
         self.filterData = self.indexData;
+      })
+        .catch(error => console.error(error));
+    },
+    fetchAbout() {
+
+      self = this;
+      const client = new DirectusSDK({
+        url: "https://directus.thegovlab.com/",
+        project: "virtual-communities",
+        storage: window.localStorage
+      });
+ 
+      client.getItems(
+        'about',
+        {
+          fields: ['*.*']
+        }
+      ).then(data => {
+
+        self.aboutData = data.data;
+ 
       })
         .catch(error => console.error(error));
     },
