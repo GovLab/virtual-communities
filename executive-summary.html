@@ -48,55 +48,24 @@
 
 <body>
     <div id="home-page" v-cloak>
-        <div class="hero testing hero-banner">
+        <div class="hero testing reports-hero hero-banner">
             <div class="text">
                 <h1>The Power of Virtual Communities</h1>
-                <h4>Case Studies</h4>
+                <h4>Executive Summary</h4>
             </div>
         </div>
 
         <div class="main-button">
             <a href="reports.html" class="btn" target="_blank">DOWNLOAD THE REPORT</a>
             <a href="executive-summary.html" class="btn" target="_blank">Executive Summary</a>
-            <a href="https://thegovlab.org/project/virtual-communities" class="btn" target="_blank">About the project</a>
             <a href="literature-review/index.html" class="btn" target="_blank">Literature Review</a>
           </div>
 
       
-        <div class="project-list">
+    <div id="body-text" class="case-text" v-html="exec_summary[0].summary_text">
 
-            <div v-for="project in filterData" class="project-item">
-                <a :href="'case/' + project.slug" target="_blank" class="project-card">
-                    <div class="project-img">
-                        <img v-if="project.featured_image" class="project-img" :src="project.featured_image.data.full_url">
-                    </div>
+    </div>
 
-                    <div class="project-text small">
-                        <p id="title">{{project.title}}</p>
-                        <p>{{project.headline}}</p>
-                        <div class="tag-section">
-
-                            <div class="tag-row owner">
-                                <p>Group size: <span v-html="project.number_of_members"></span></p>
-                            </div>
-                            <div class="tag-row owner">
-                                <p>Founded: <span v-html="project.founding_year"></span></p>
-                            </div>
-                            <div class="tag-row">
-                                <span id="location-icon" class="material-icons"> location_on</span>
-                                <div class="tag-col"  v-if="project.location">
-                                    <p><span class="tag region-tag">{{project.location}}</span></p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="funder">
-            <p>This work was funded by a grant by and in collaboration with facebook</p>
-        </div>
         <footer>
             <div class="logo-side">
                 <img src="case/images/the-govlab-logo_white.png">
