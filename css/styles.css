@@ -868,6 +868,12 @@ img.project-img{
   height: 150px;
   border-radius: 0px  0px 0px 0px;
 }
+img.project-img.report{
+  object-fit: cover;
+  width: 380px;
+  height: 150px;
+  border-radius: 0px  0px 0px 0px;
+}
 .project-card .project-text{
   margin-top: -10px;
   background-color: var(--grey10);
@@ -882,6 +888,7 @@ img.project-img{
     }  
     .report-item .project-card .project-text.small{
       display:flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 60px;

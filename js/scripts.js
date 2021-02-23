@@ -156,7 +156,7 @@ new Vue({
       client.getItems(
         'reports',
         {
-          fields: ['*.*']
+          fields: ['*.*','thumbnail.*']
         }
       ).then(data => {
 

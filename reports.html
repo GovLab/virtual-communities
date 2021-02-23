@@ -88,8 +88,11 @@
 
             <div v-for="report in reportData" class="report-item">
                 <a :href="'files/' + report.link" target="_blank" class="project-card">
-
-                    <div class="project-text small">
+                  <div class="project-img">
+                    <img class="project-img report" :src="report.thumbnail.data.full_url">
+                </div>
+                    <div class="project-text small report">
+                      <p id="title">Download the report in {{report.language}}</p>
                         <p id="title">{{report.title}}</p>
                     
 
