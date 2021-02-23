@@ -31,6 +31,7 @@ new Vue({
     return {
       indexData: [],
       newData: [],
+      aboutData:[],
       apiURL: 'https://directus.thegovlab.com/virtual-communities',
 
     }
@@ -38,6 +39,7 @@ new Vue({
 
   created: function created() {
     this.fetchIndex();
+    this.fetchAbout();
   },
   methods: {
 
@@ -63,6 +65,27 @@ new Vue({
   console.log(newData);
 })
 .catch(error => console.error(error));
+    },
+    fetchAbout() {
+
+      self = this;
+      const client = new DirectusSDK({
+        url: "https://directus.thegovlab.com/",
+        project: "virtual-communities",
+        storage: window.localStorage
+      });
+ 
+      client.getItems(
+        'about',
+        {
+          fields: ['*.*']
+        }
+      ).then(data => {
+
+        self.aboutData = data.data;
+ 
+      })
+        .catch(error => console.error(error));
     },
     hover(id){
       console.log(id);
