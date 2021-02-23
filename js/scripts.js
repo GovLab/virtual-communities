@@ -32,7 +32,10 @@ new Vue({
       filterData: [],
       reportData:[],
       exec_summary:[],
+      teamData:[],
       selectedProjectType: null,
+      showMessage: true,
+      index_active:0,
       apiURL: 'https://directus.thegovlab.com/virtual-communities',
     }
   },
@@ -42,6 +45,8 @@ new Vue({
     this.fetchIndex();
     this.fetchReports();
     this.fetchSummary();
+    this.fetchTeam();
+    this.toggleMessage();
   },
   methods: {
 
@@ -63,6 +68,35 @@ new Vue({
 
         self.indexData = data.data;
         self.filterData = self.indexData;
+      })
+        .catch(error => console.error(error));
+    },
+    fetchTeam() {
+
+      self = this;
+      const client = new DirectusSDK({
+        url: "https://directus.thegovlab.com/",
+        project: "virtual-communities",
+        storage: window.localStorage
+      });
+ 
+      client.getItems(
+        'team',
+        {
+          fields: ['*.*','headshot.*']
+        }
+      ).then(data => {
+        data.data.sort(function(a, b) {
+    
+          var textA = a.last_name.toUpperCase();
+          var textB = b.last_name.toUpperCase();
+          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+      
+        
+      });
+
+        self.teamData = data.data;
+     
       })
         .catch(error => console.error(error));
     },
@@ -109,7 +143,12 @@ new Vue({
     },
     dateShow(date) {
       return moment(date).format("MMMM YYYY");
+    },
+    toggleMessage (index) {
+      this.index_active = index;
+    	this.showMessage = !this.showMessage
     }
+   
 
   }
 });

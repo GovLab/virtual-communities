@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-40012093-30"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-40012093-30');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The Power of Virtual Communities project examines the role online groups play in creating opportunities for people to build new kinds of meaningful communities they often could not form in real space. We seek to understand the conditions under which onlinegroups are able to successfully become meaningful communities, as well as the characteristics of the community leaders that create and support them." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Power of Virtual Communities" />
+    <meta property="og:description" content="The Power of Virtual Communities project examines the role online groups play in creating opportunities for people to build new kinds of meaningful communities they often could not form in real space. We seek to understand the conditions under which onlinegroups are able to successfully become meaningful communities, as well as the characteristics of the community leaders that create and support them." />
+    <!-- <meta property="og:image" content="case/images/ss.png" /> -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@thegovlab">
+    <meta name="twitter:title" content="The Power of Virtual Communities">
+<meta name="twitter:description" content="The Power of Virtual Communities project examines the role online groups play in creating opportunities for people to build new kinds of meaningful communities they often could not form in real space. We seek to understand the conditions under which onlinegroups are able to successfully become meaningful communities, as well as the characteristics of the community leaders that create and support them.">
+<!-- <meta name="twitter:image" content="case/images/ss.png" /> -->
+
+
+    <title>The Power of Virtual Communities</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.typekit.net/kwv5eho.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@directus/sdk-js@5.3.4/dist/directus-sdk.umd.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+
+<header class="gl-header">
+
+    <a class="govlab-logo" href="index.html">
+        <img id="gl-logo" src="case/images/the-govlab-logo_white.png" alt="The GovLab">
+    </a>
+    <!-- <a class="govlab-logo" href="index.html">
+        <img id="fb-logo" src="case/images/facebook.png" alt="The GovLab">
+    </a> -->
+</header>
+
+<body>
+    <div v-cloak>
+        <div class="hero testing reports-hero hero-banner">
+            <div class="text">
+                <h1>Team</h1>
+            </div>
+        </div>
+
+        <div class="main-button">
+            <a href="reports.html" class="btn" target="_blank">DOWNLOAD THE REPORT</a>
+            <a href="executive-summary.html" class="btn" target="_blank">Executive Summary</a>
+            <a href="literature-review/index.html" class="btn" target="_blank">Literature Review</a>
+          </div>
+
+      
+          <div id="home-page">
+            <div class="grid bios">
+              <div v-for="(team,index) in teamData" class="faculty-item">
+                <div  class="e-team-picture" :style="{ backgroundImage: 'url(' + team.headshot.data.thumbnails[3].url+ ')' }"></div>
+                <div class="faculty-text">
+                  <h3>{{team.first_name}} {{team.last_name}}</h3>
+                  <h5>{{team.affiliation}}</h5>
+                  <h5 v-if="!team.role">Report Author</h5>
+                <h5 v-if="team.role">Project Advisor</h5>
+                
+                  <p v-if="team.short_bio && (!showMessage || index_active!=index)">{{team.short_bio}} </p>
+                 
+      
+                  <div v-if="team.short_bio && showMessage && index_active==index" class="panel" v-html="team.full_bio">
+      
+                  </div>
+                  <div v-if="team.short_bio" @click="toggleMessage(index)" v-bind:class="{ active: showMessage && index_active==index }" class="accordion faculty-more"><i class="material-icons down"></i></div>
+                </div>
+      
+              </div>
+    
+            </div>
+          </div>
+</div>
+        <footer>
+            <div class="logo-side">
+                <img src="case/images/the-govlab-logo_white.png">
+                <p>The Governance Lab's mission is to improve people's lives by changing the way we govern. Our goal at
+                    The GovLab is to strengthen the ability of institutions — including but not limited to governments —
+                    and people to work more openly, collaboratively, effectively, and legitimately to make better
+                    decisions and solve public problems. We believe that increased availability and use of data, new
+                    ways to leverage the capacity, intelligence, and expertise of people in the problem-solving process,
+                    combined with new advances in technology and science, can transform governance. We approach each
+                    challenge and opportunity in an interdisciplinary, collaborative way, irrespective of the problem,
+                    sector, geography, and level of government. For more information, visit thegovlab.org.</p>
+            </div>
+            <div class="address">
+                <h4>CONTACT US</h4>
+                <p>The GovLab<br>
+                    NYU Tandon School of Engineering<br>
+                    2 MetroTech Center, 9th Floor<br>
+                    Brooklyn, NY 11201<br>
+                    (646) 997-3150<br>
+                    info@thegovlab.org
+                </p>
+            </div>
+        </footer>
+    
+</body>
+
+<script src='https://unpkg.com/vue@2.0.3/dist/vue.js'></script>
+<script src="https://unpkg.com/vue-meta/dist/vue-meta.min.js"></script>
+<script src="js/scripts.js"></script>
+
+</html>
