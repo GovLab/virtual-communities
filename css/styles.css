@@ -1580,3 +1580,31 @@ align-items: flex-start;
   font-weight: 200;
   content: 'keyboard_arrow_up';
 }
+.copyright{
+  background-color: var(--grey);
+  height: 8vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.copyright a,.copyright p{
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+}
+
+
+@media screen and (max-width: 768px){
+  .copyright{
+    background-color: var(--grey);
+    height: 24vh;
+    display: flex;
+    flex-direction: column;
+
+  }
+  .copyright a,.copyright p{
+margin:0;
+  }
+}
