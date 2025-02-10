@@ -90,7 +90,7 @@
             <div v-for="project in filterData" class="project-item">
                 <a :href="'case/' + project.slug" target="_blank" class="project-card">
                     <div class="project-img">
-                        <img v-if="project.featured_image" class="project-img" :src="project.featured_image.data.full_url">
+                        <img v-if="project.featured_image" class="project-img" :src="project.featured_image.data.thumbnails[7].url">
                     </div>
 
                     <div class="project-text small">
