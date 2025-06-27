@@ -32,7 +32,7 @@ new Vue({
       indexData: [],
       newData: [],
       aboutData:[],
-      apiURL: 'https://directus.thegovlab.com/virtual-communities',
+      apiURL: 'https://burnes-center.directus.app/virtual-communities',
 
     }
   },
@@ -44,47 +44,35 @@ new Vue({
   methods: {
 
     fetchIndex() {
-      self = this;
-      const client = new DirectusSDK({
-        url: "https://directus.thegovlab.com/",
-        project: "virtual-communities",
-        storage: window.localStorage
-      });
+      const self = this;
+      fetch('https://burnes-center.directus.app/items/vc_litreview?fields%5B0%5D=%2A.%2A')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          self.indexData = data.data;
+          self.newData = data.data;
+          console.log(self.indexData);
+          console.log(self.newData);
+        })
+        .catch(error => console.error(error));
 
-      client.getItems(
-  'lit_review',
-  {
-    fields: ['*.*']
-  }
-).then(data => {
-  self.indexData = data.data;
-  self.newData = data.data;
-  console.log(this.indexData);
-  // self.newData =  self.indexData[0].text_body.replaceAll("applewebdata://AACC4B4A-BFE3-49A6-8DF0-420462282428","");
-  // self.newData =  self.newData.replaceAll("</sup>","</sup></a>");
-  console.log(newData);
-})
-.catch(error => console.error(error));
     },
     fetchAbout() {
-
-      self = this;
-      const client = new DirectusSDK({
-        url: "https://directus.thegovlab.com/",
-        project: "virtual-communities",
-        storage: window.localStorage
-      });
- 
-      client.getItems(
-        'about',
-        {
-          fields: ['*.*']
-        }
-      ).then(data => {
-
-        self.aboutData = data.data;
- 
-      })
+      const self = this;
+      fetch('https://burnes-center.directus.app/items/vc_about?fields%5B0%5D=%2A.%2A')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          self.aboutData = data.data;
+        })
         .catch(error => console.error(error));
     },
     hover(id){

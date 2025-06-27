@@ -89,7 +89,7 @@
             <div v-for="report in reportData" class="report-item">
                 <a :href="'https://virtual-communities.thegovlab.org/files/' + report.link" target="_blank" class="project-card">
                   <div class="project-img">
-                    <img class="project-img report" :src="report.thumbnail.data.full_url">
+                    <img class="project-img report" :src="`https://burnes-center.directus.app/assets/${report.thumbnail.id}`">
                 </div>
                     <div class="project-text small report">
                       <p id="title">Download the report in {{report.language}}</p>

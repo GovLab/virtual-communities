@@ -31,7 +31,7 @@ new Vue({
     return {
       indexData: [],
       newData: [],
-      apiURL: 'https://directus.thegovlab.com/virtual-communities',
+      apiURL: 'https://burnes-center.directus.app/virtual-communities',
 
     }
   },
@@ -47,7 +47,7 @@ new Vue({
     fetchIndex() {
       self = this;
       const client = new DirectusSDK({
-        url: "https://directus.thegovlab.com/",
+        url: "https://burnes-center.directus.app/",
         project: "virtual-communities",
         storage: window.localStorage
       });

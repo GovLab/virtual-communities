@@ -82,7 +82,7 @@
           <div id="home-page">
             <div class="grid bios">
               <div v-for="(team,index) in teamData" class="faculty-item">
-                <div  class="e-team-picture" :style="{ backgroundImage: 'url(' + team.headshot.data.thumbnails[3].url+ ')' }"></div>
+                <div  class="e-team-picture" :style="{ backgroundImage: 'url(' + `https://burnes-center.directus.app/assets/${team.headshot.id}` + ')' }"></div>
                 <div class="faculty-text">
                   <h3>{{team.first_name}} {{team.last_name}}</h3>
                   <h5>{{team.affiliation}}</h5>

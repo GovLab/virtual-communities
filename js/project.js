@@ -29,7 +29,7 @@ new Vue({
  
     return {
       filterData: [],
-      apiURL: 'https://directus.thegovlab.com/virutal-communities',
+      apiURL: 'https://burnes-center.directus.app/virutal-communities',
     }
   },
 
@@ -46,7 +46,7 @@ new Vue({
      
       self = this;
       const client = new DirectusSDK({
-        url: "https://directus.thegovlab.com/",
+        url: "https://burnes-center.directus.app/",
         project: "virtual-communities",
         storage: window.localStorage
       });
