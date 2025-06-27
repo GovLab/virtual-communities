@@ -39,36 +39,28 @@ new Vue({
   created: function created() {
     this.memberslug=window.location.href.split('/');
     this.memberslug = this.memberslug[this.memberslug.length - 1];
+    
     console.log(this.memberslug);
+
     this.fetchIndex();
   },
   methods: {
 
     fetchIndex() {
-      self = this;
-      const client = new DirectusSDK({
-        url: "https://burnes-center.directus.app/",
-        project: "virtual-communities",
-        storage: window.localStorage
-      });
-
-      client.getItems(
-  'case_study',
-  {
-    filter: {
-      slug: self.memberslug
-    },
-    fields: ['*.*']
-  }
-).then(data => {
-  self.indexData = data.data;
-  
-  console.log(this.indexData);
-  // self.newData =  self.indexData[0].case_study_body.replaceAll("<sup>","<sup><a href='#endnotes'>");
-  // self.newData =  self.newData.replaceAll("</sup>","</sup></a>");
-  console.log(newData);
-})
-.catch(error => console.error(error));
+      const self = this;
+      const url = `https://burnes-center.directus.app/items/vc_case_study?filter%5Bslug%5D=${encodeURIComponent(self.memberslug)}&fields%5B0%5D=%2A.%2A`;
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          self.indexData = data.data;
+          console.log(self.indexData);
+        })
+        .catch(error => console.error(error));
     },
     hover(id){
       console.log(id);
