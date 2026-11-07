@@ -20,16 +20,33 @@ main();
 ////////////////////////////////////////////////////////////
 
 
+////////////////////////////////////////////////////////////
+///// PRE-RENDERED PAGES (see scripts/prerender.mjs)
+////////////////////////////////////////////////////////////
+// A pre-rendered page carries its Vue template and the CMS data inline:
+// render from those instead of calling the API.
+var PRERENDER = (function () {
+  var tpl = document.getElementById('home-page-tpl');
+  var json = document.getElementById('prerender-data');
+  if (!tpl || !json) return null;
+  try {
+    return { template: '#home-page-tpl', data: JSON.parse(json.textContent).data };
+  } catch (e) {
+    return null;
+  }
+})();
+
 Vue.use(VueMeta);
 
 new Vue({
     
   el: '#home-page',
-    
+  template: PRERENDER ? PRERENDER.template : undefined,
+
   data () {
-  
+
     return {
-      indexData: [],
+      indexData: PRERENDER ? PRERENDER.data.indexData : [],
       newData: [],
       apiURL: 'https://burnes-center.directus.app/virtual-communities',
 
@@ -37,12 +54,13 @@ new Vue({
   },
 
   created: function created() {
-    this.memberslug=window.location.href.split('/');
-    this.memberslug = this.memberslug[this.memberslug.length - 1];
-    
+    // Slug = last path segment, without query, hash, trailing slash or ".html".
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    this.memberslug = decodeURIComponent((parts.pop() || '').replace(/\.html$/, ''));
+
     console.log(this.memberslug);
 
-    this.fetchIndex();
+    if (!PRERENDER) this.fetchIndex();
   },
   methods: {
 

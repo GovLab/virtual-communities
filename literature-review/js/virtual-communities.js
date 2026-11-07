@@ -20,24 +20,42 @@ main();
 ////////////////////////////////////////////////////////////
 
 
+////////////////////////////////////////////////////////////
+///// PRE-RENDERED PAGES (see scripts/prerender.mjs)
+////////////////////////////////////////////////////////////
+// A pre-rendered page carries its Vue template and the CMS data inline:
+// render from those instead of calling the API.
+var PRERENDER = (function () {
+  var tpl = document.getElementById('home-page-tpl');
+  var json = document.getElementById('prerender-data');
+  if (!tpl || !json) return null;
+  try {
+    return { template: '#home-page-tpl', data: JSON.parse(json.textContent).data };
+  } catch (e) {
+    return null;
+  }
+})();
+
 Vue.use(VueMeta);
 
 new Vue({
     
   el: '#home-page',
-    
+  template: PRERENDER ? PRERENDER.template : undefined,
+
   data () {
-  
+
     return {
-      indexData: [],
-      newData: [],
-      aboutData:[],
+      indexData: PRERENDER ? PRERENDER.data.indexData : [],
+      newData: PRERENDER ? PRERENDER.data.indexData : [],
+      aboutData: PRERENDER ? PRERENDER.data.aboutData : [],
       apiURL: 'https://burnes-center.directus.app/virtual-communities',
 
     }
   },
 
   created: function created() {
+    if (PRERENDER) return;
     this.fetchIndex();
     this.fetchAbout();
   },
