@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-40012093-30"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-40012093-30');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The Power of Virtual Communities project examines the role online groups play in creating opportunities for people to build new kinds of meaningful communities they often could not form in real space. We seek to understand the conditions under which onlinegroups are able to successfully become meaningful communities, as well as the characteristics of the community leaders that create and support them." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Power of Virtual Communities" />
+    <meta property="og:description" content="The Power of Virtual Communities project examines the role online groups play in creating opportunities for people to build new kinds of meaningful communities they often could not form in real space. We seek to understand the conditions under which onlinegroups are able to successfully become meaningful communities, as well as the characteristics of the community leaders that create and support them." />
+    <!-- <meta property="og:image" content="case/images/ss.png" /> -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@thegovlab">
+    <meta name="twitter:title" content="The Power of Virtual Communities">
+<meta name="twitter:description" content="The Power of Virtual Communities project examines the role online groups play in creating opportunities for people to build new kinds of meaningful communities they often could not form in real space. We seek to understand the conditions under which onlinegroups are able to successfully become meaningful communities, as well as the characteristics of the community leaders that create and support them.">
+<!-- <meta name="twitter:image" content="case/images/ss.png" /> -->
+
+
+    <title>The Power of Virtual Communities</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.typekit.net/kwv5eho.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@directus/sdk-js@5.3.4/dist/directus-sdk.umd.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+
+
+<div class="topnav">
+    <div class="menu-bars">
+      <div class="bar-wrap">
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+    </div>
+    <a class="top_logo" href="../index.html"><img src="case/images/the-govlab-logo_white.png" alt="The GovLab"></a>
+
+    <!-- Navigation links (hidden by default) -->
+
+    <div class='lang-select'>
+    
+    </div>
+  </div>
+  <div id="myLinks">
+    <div class="menu-items">
+      <div class="menu-sub" onclick="dismiss_menu()"><a href="index.html">Home</a></div>
+      <div class="menu-sub" onclick="dismiss_menu()"><a href="https://thegovlab.org/project/virtual-communities">About</a></div>
+      <div class="menu-sub" onclick="dismiss_menu()"><a href="executive-summary.html">Executive Summary</a></div>
+      <div class="menu-sub" onclick="dismiss_menu()"><a href="literature-review/">Literature Review</a></div>
+      <div class="menu-sub" onclick="dismiss_menu()"><a href="index.html">Case Studies</a></div>
+      <div class="menu-sub" onclick="dismiss_menu()"><a href="reports.html">Download the Report</a></div>
+      <div class="menu-sub" onclick="dismiss_menu()"><a href="team.html">Team</a></div>
+
+    </div>
+  </div>
+
+<body>
+    <div onclick="dismiss_menu()" id="home-page" v-cloak>
+        <div class="hero testing hero-banner">
+            <div class="text">
+                <h1>The Power of Virtual Communities</h1>
+                <h4>Case Studies</h4>
+            </div>
+        </div>
+
+        <div class="main-button">
+            <a href="reports.html" class="btn" target="_blank">DOWNLOAD THE REPORT</a>
+            <a href="executive-summary.html" class="btn" target="_blank">Executive Summary</a>
+            <a href="https://thegovlab.org/project/virtual-communities" class="btn" target="_blank">About the project</a>
+            <a href="literature-review/index.html" class="btn" target="_blank">Literature Review</a>
+          </div>
+
+          <div id="body-text" class="case-text" style="text-align: center;" v-html="aboutData[0].about_the_project">
+
+        </div>
+        <div class="project-list">
+
+            <div v-for="project in filterData" class="project-item">
+                <a :href="'case/' + project.slug" target="_blank" class="project-card">
+                    <div class="project-img">
+                        <img v-if="project.featured_image" class="project-img" :src="`https://burnes-center.directus.app/assets/${project.featured_image.id}`">
+                    </div>
+
+                    <div class="project-text small">
+                        <p id="title">{{project.title}}</p>
+                        <p>{{project.headline}}</p>
+                        <div class="tag-section">
+
+                            <div class="tag-row owner">
+                                <p>Group size: <span v-html="project.number_of_members"></span></p>
+                            </div>
+                            <div class="tag-row owner">
+                                <p>Founded: <span v-html="project.founding_year"></span></p>
+                            </div>
+                            <div class="tag-row">
+                                <span id="location-icon" class="material-icons"> location_on</span>
+                                <div class="tag-col"  v-if="project.location">
+                                    <p><span class="tag region-tag">{{project.location}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <div class="logo-side">
+                <img src="case/images/the-govlab-logo_white.png">
+                <p>The Governance Lab's mission is to improve people's lives by changing the way we govern. Our goal at
+                    The GovLab is to strengthen the ability of institutions — including but not limited to governments —
+                    and people to work more openly, collaboratively, effectively, and legitimately to make better
+                    decisions and solve public problems. We believe that increased availability and use of data, new
+                    ways to leverage the capacity, intelligence, and expertise of people in the problem-solving process,
+                    combined with new advances in technology and science, can transform governance. We approach each
+                    challenge and opportunity in an interdisciplinary, collaborative way, irrespective of the problem,
+                    sector, geography, and level of government. For more information, visit thegovlab.org.</p>
+            </div>
+            <div class="address">
+                <h4>CONTACT US</h4>
+                <p>The GovLab<br>
+                    NYU Tandon School of Engineering<br>
+                    2 MetroTech Center, 9th Floor<br>
+                    Brooklyn, NY 11201<br>
+                    (646) 997-3150<br>
+                    info@thegovlab.org
+                </p>
+            </div>
+        </footer>
+        <div class="copyright">
+           
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                  <img class="copyright_cc-badge"
+                    alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+                <p>&nbspThis work is licensed under a</p>&nbsp<a rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License.</a>.
+              </div>
+   
+     
+    </div>
+</body>
+<script>
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function myFunction() {
+      var x = document.getElementById("myLinks");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+  </script>
+  <script>
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function dismiss_menu() {
+      var x = document.getElementById("myLinks");
+     x.style.display = "none";
+    }
+  </script>
+<script src='https://unpkg.com/vue@2.0.3/dist/vue.js'></script>
+<script src="https://unpkg.com/vue-meta/dist/vue-meta.min.js"></script>
+<script src="js/scripts.js"></script>
+
+</html>

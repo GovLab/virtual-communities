@@ -19,21 +19,40 @@ main();
 ///// TEAM  API REQUEST ` `
 ////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////
+///// PRE-RENDERED PAGES (see scripts/prerender.mjs)
+////////////////////////////////////////////////////////////
+// A pre-rendered page carries its Vue template and the CMS data inline:
+// render from those instead of calling the API.
+var PRERENDER = (function () {
+  var tpl = document.getElementById('home-page-tpl');
+  var json = document.getElementById('prerender-data');
+  if (!tpl || !json) return null;
+  try {
+    return { template: '#home-page-tpl', data: JSON.parse(json.textContent).data };
+  } catch (e) {
+    return null;
+  }
+})();
+
 Vue.use(VueMeta);
 
 new Vue({
 
   el: '#home-page',
+  template: PRERENDER ? PRERENDER.template : undefined,
 
   data() {
+    // A pre-rendered page carries only the data its template uses.
+    var seed = PRERENDER ? PRERENDER.data : {};
 
     return {
-      indexData: [],
-      filterData: [],
-      reportData:[],
-      aboutData:[],
-      exec_summary:[],
-      teamData:[],
+      indexData: seed.indexData || [],
+      filterData: seed.indexData || [],
+      reportData: seed.reportData || [],
+      aboutData: seed.aboutData || [],
+      exec_summary: seed.exec_summary || [],
+      teamData: seed.teamData || [],
       selectedProjectType: null,
       showMessage: true,
       index_active:0,
@@ -43,11 +62,13 @@ new Vue({
 
   created: function created() {
     this.memberslug = window.location.pathname.split('/');
-    this.fetchIndex();
-    this.fetchReports();
-    this.fetchSummary();
-    this.fetchTeam();
-    this.fetchAbout();
+    if (!PRERENDER) {
+      this.fetchIndex();
+      this.fetchReports();
+      this.fetchSummary();
+      this.fetchTeam();
+      this.fetchAbout();
+    }
     this.toggleMessage();
   },
   methods: {

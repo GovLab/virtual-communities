@@ -1,0 +1,96 @@
+{
+  "note": "Written by scripts/prerender.mjs. inPlace pages are rendered from scripts/templates/<file>.tpl.",
+  "pages": [
+    {
+      "path": "/",
+      "file": "index.html",
+      "inPlace": true,
+      "prerendered": true,
+      "markdown": "index.md"
+    },
+    {
+      "path": "/executive-summary",
+      "file": "executive-summary.html",
+      "inPlace": true,
+      "prerendered": true,
+      "markdown": "executive-summary.md"
+    },
+    {
+      "path": "/literature-review/",
+      "file": "literature-review/index.html",
+      "inPlace": true,
+      "prerendered": true,
+      "markdown": "literature-review.md"
+    },
+    {
+      "path": "/reports",
+      "file": "reports.html",
+      "inPlace": true,
+      "prerendered": true,
+      "markdown": "reports.md"
+    },
+    {
+      "path": "/team",
+      "file": "team.html",
+      "inPlace": true,
+      "prerendered": true,
+      "markdown": "team.md"
+    },
+    {
+      "path": "/case/african-mums-in-deutschland",
+      "file": "case/african-mums-in-deutschland.html",
+      "inPlace": false,
+      "prerendered": true,
+      "markdown": "case/african-mums-in-deutschland.md"
+    },
+    {
+      "path": "/case/humankind-global",
+      "file": "case/humankind-global.html",
+      "inPlace": false,
+      "prerendered": true,
+      "markdown": "case/humankind-global.md"
+    },
+    {
+      "path": "/case/cluba-da-alice",
+      "file": "case/cluba-da-alice.html",
+      "inPlace": false,
+      "prerendered": true,
+      "markdown": "case/cluba-da-alice.md"
+    },
+    {
+      "path": "/case/essex-coronavirus-action",
+      "file": "case/essex-coronavirus-action.html",
+      "inPlace": false,
+      "prerendered": true,
+      "markdown": "case/essex-coronavirus-action.md"
+    },
+    {
+      "path": "/case/subtle-asian-traits",
+      "file": "case/subtle-asian-traits.html",
+      "inPlace": false,
+      "prerendered": true,
+      "markdown": "case/subtle-asian-traits.md"
+    },
+    {
+      "path": "/case/surviving-hijab",
+      "file": "case/surviving-hijab.html",
+      "inPlace": false,
+      "prerendered": true,
+      "markdown": "case/surviving-hijab.md"
+    },
+    {
+      "path": "/case/white-people-doing-something",
+      "file": "case/white-people-doing-something.html",
+      "inPlace": false,
+      "prerendered": true,
+      "markdown": "case/white-people-doing-something.md"
+    },
+    {
+      "path": "/case/female-in",
+      "file": "case/female-in.html",
+      "inPlace": false,
+      "prerendered": true,
+      "markdown": "case/female-in.md"
+    }
+  ]
+}

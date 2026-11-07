@@ -1,0 +1,19 @@
+# The Power of Virtual Communities
+
+> The Power of Virtual Communities project examines the role online groups play in creating opportunities for people to build new kinds of meaningful communities they often could not form in real space. The GovLab interviewed leaders of online groups from around the world in 2020; this site publishes the resulting case studies, a literature review, an executive summary and the full report. Text licensed CC BY-SA 4.0.
+
+## Pages
+
+- [The Power of Virtual Communities](https://virtual-communities.thegovlab.org/index.md): The Power of Virtual Communities project examines the role online groups play in creating opportunities for people to build new kinds of meaningful communities they often could not form in real space.
+- [The Power of Virtual Communities: Executive Summary](https://virtual-communities.thegovlab.org/executive-summary.md): Online groups are significant contemporary organizations that can generate impact, and provide their members with a strong sense of community and belonging, despite not operating in physical space. 1.8 billion people use Facebook Groups every month, and more than half of all the people using…
+- [The Power of Virtual Communities: Literature Review](https://virtual-communities.thegovlab.org/literature-review.md): The formation, structure and governance of groups online, and the relationship of individual members and society to those groups, is a large, robust, multidisciplinary field. Scholars have been writing about “digital” or “virtual” communities since the World Wide Web began (Rheingold 1993) and…
+- [The Power of Virtual Communities: Download the Report](https://virtual-communities.thegovlab.org/reports.md): The full report as PDF in English, Portuguese, Spanish, Arabic, French, Indonesian.
+- [The Power of Virtual Communities: Team](https://virtual-communities.thegovlab.org/team.md): The authors and advisors of The Power of Virtual Communities.
+- [African Mums in Deutschland](https://virtual-communities.thegovlab.org/case/african-mums-in-deutschland.md): How 4,100 mothers built an online niche in Germany
+- [HumanKind Global](https://virtual-communities.thegovlab.org/case/humankind-global.md): Volunteers fulfill more than 25,000 requests for pandemic-related help
+- [Clube da Alice](https://virtual-communities.thegovlab.org/case/cluba-da-alice.md): 500,000 women are finding empowerment through entrepreneurship
+- [Essex Coronavirus Action](https://virtual-communities.thegovlab.org/case/essex-coronavirus-action.md): Mobilizing Essex residents and Facebook group leaders for coronavirus response
+- [Subtle Asian Traits](https://virtual-communities.thegovlab.org/case/subtle-asian-traits.md): 1.8 million Asians living around the world connecting over a common identity
+- [Surviving Hijab](https://virtual-communities.thegovlab.org/case/surviving-hijab.md): More than 900,000 women are supporting one another to overcome hardship
+- [White People. DOING Something.](https://virtual-communities.thegovlab.org/case/white-people-doing-something.md): Building a racial justice community around compassion and empathy
+- [Female IN (FIN)](https://virtual-communities.thegovlab.org/case/female-in.md): 1.7 million women are leading with kindness

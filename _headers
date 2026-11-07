@@ -1,0 +1,45 @@
+# Written by scripts/prerender.mjs: content types for the Markdown copies of the pages
+# and llms.txt, and a canonical Link header pointing each copy at its HTML page.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+/llms-full.txt
+  Content-Type: text/markdown; charset=utf-8
+/index.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/>; rel="canonical"
+/executive-summary.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/executive-summary>; rel="canonical"
+/literature-review.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/literature-review/>; rel="canonical"
+/reports.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/reports>; rel="canonical"
+/team.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/team>; rel="canonical"
+/case/african-mums-in-deutschland.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/case/african-mums-in-deutschland>; rel="canonical"
+/case/humankind-global.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/case/humankind-global>; rel="canonical"
+/case/cluba-da-alice.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/case/cluba-da-alice>; rel="canonical"
+/case/essex-coronavirus-action.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/case/essex-coronavirus-action>; rel="canonical"
+/case/subtle-asian-traits.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/case/subtle-asian-traits>; rel="canonical"
+/case/surviving-hijab.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/case/surviving-hijab>; rel="canonical"
+/case/white-people-doing-something.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/case/white-people-doing-something>; rel="canonical"
+/case/female-in.md
+  Content-Type: text/markdown; charset=utf-8
+  Link: <https://virtual-communities.thegovlab.org/case/female-in>; rel="canonical"
