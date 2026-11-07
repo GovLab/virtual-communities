@@ -153,8 +153,10 @@ turndown.addRule('links', {
     if (!content.trim()) return '';
     if (/^(mailto:|tel:|javascript:|#)/i.test(href)) return content;
     let url;
-    try { url = new URL(href, markdownBase).href; } catch { return content; }
-    return `[${content}](${url})`;
+    try { url = new URL(href, markdownBase); } catch { return content; }
+    // Links within the site point at the clean URLs ("/x", not "/x.html").
+    if (url.origin === new URL(config.origin).origin) url.pathname = url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+    return `[${content}](${url.href})`;
   },
 });
 // Turndown's list items with a single space after the marker ("- item", "1. item").
@@ -172,6 +174,18 @@ turndown.addRule('list-items', {
     const body = content.replace(/^\n+|\n+$/g, '') + (paragraph ? '\n' : '');
     return prefix + body.replace(/\n/gm, '\n' + ' '.repeat(prefix.length)) + (node.nextSibling ? '\n' : '');
   },
+});
+
+// Elements left out by mdFrom(): tag names, ".class" or "#id".
+let dropSelectors = [];
+const matches = (node, sel) => {
+  if (sel[0] === '.') return ` ${node.getAttribute('class') || ''} `.replace(/\s+/g, ' ').includes(` ${sel.slice(1)} `);
+  if (sel[0] === '#') return node.getAttribute('id') === sel.slice(1);
+  return node.nodeName === sel.toUpperCase();
+};
+turndown.addRule('drop', {
+  filter: (node) => node.nodeType === 1 && dropSelectors.some((sel) => matches(node, sel)),
+  replacement: () => '',
 });
 
 // Shift headings so the shallowest one is "##": the page title is the only "#".
@@ -193,6 +207,12 @@ function md(html) {
     .replace(/\n{3,}/g, '\n\n')
     .trim();
   return normaliseHeadings(text);
+}
+
+// Rendered page HTML -> Markdown, leaving out navigation and other chrome.
+function mdFrom(html, drop = []) {
+  dropSelectors = drop;
+  try { return md(html); } finally { dropSelectors = []; }
 }
 
 function frontMatter(fields) {
@@ -279,14 +299,17 @@ async function startServer({ port = 0, hide = new Set(), overrides = new Map() }
 // Runs inside the page, once its Vue instance has loaded the CMS data.
 function renderInPage({ source, seedKeys }) {
   const vm = document.getElementById('home-page').__vue__;
-  // The template Vue compiles today is the browser-parsed #home-page element;
-  // comments are dropped (Vue ignores them, and they must not sit in a <script>).
+  // The template Vue compiles today is the browser-parsed #home-page element.
+  // Comments, <script> and <style> elements are dropped: Vue does not render
+  // them, and they must not sit in a <script> (a page whose #home-page is not
+  // closed in the source gets the trailing scripts inside it).
   const doc = new DOMParser().parseFromString(source, 'text/html');
   const el = doc.getElementById('home-page');
   const walker = doc.createTreeWalker(el, NodeFilter.SHOW_COMMENT);
   const comments = [];
   while (walker.nextNode()) comments.push(walker.currentNode);
   comments.forEach((c) => c.remove());
+  el.querySelectorAll('script, style').forEach((n) => n.remove());
   const template = el.outerHTML;
 
   // Published rows only; drop editor ids and file-storage details.
@@ -306,8 +329,13 @@ function renderInPage({ source, seedKeys }) {
     return v;
   };
   const published = (rows) => rows.filter((r) => !(r && typeof r === 'object' && typeof r.status === 'string' && r.status !== 'published'));
-  const state = JSON.parse(JSON.stringify(vm.$data));
-  Object.keys(state).forEach((k) => { state[k] = clean(Array.isArray(state[k]) ? published(state[k]) : state[k]); });
+  // Data only: DOM nodes and jQuery objects some pages keep in their data are left out.
+  const json = (v) => JSON.parse(JSON.stringify(v, (k, x) => (x && typeof x === 'object' && (x.nodeType || x.jquery) ? undefined : x)));
+  const state = {};
+  Object.keys(vm.$data).forEach((k) => {
+    try { state[k] = json(vm.$data[k]); } catch (e) { return; }
+    state[k] = clean(Array.isArray(state[k]) ? published(state[k]) : state[k]);
+  });
 
   const fresh = new Vue({
     template,
@@ -349,11 +377,12 @@ async function snapshot(browser, url, page, source) {
   return result;
 }
 
-// Start and end offsets of the <div id="home-page"> element in the source.
+// Start and end offsets of the id="home-page" element (a <div> or <main>) in the source.
 function homePageSpan(src) {
-  const open = /<div\b[^>]*\bid=["']home-page["'][^>]*>/i.exec(src);
-  if (!open) throw new Error('no <div id="home-page"> in template');
-  const tags = /<!--[\s\S]*?-->|<(\/?)div\b[^>]*>/gi;
+  const open = /<([a-z][a-z0-9]*)\b[^>]*\bid=["']home-page["'][^>]*>/i.exec(src);
+  if (!open) throw new Error('no element with id="home-page" in template');
+  const tag = open[1].toLowerCase();
+  const tags = new RegExp(`<!--[\\s\\S]*?-->|<(\\/?)${tag}\\b[^>]*>`, 'gi');
   tags.lastIndex = open.index;
   let depth = 0;
   let m;
@@ -362,7 +391,9 @@ function homePageSpan(src) {
     depth += m[1] ? -1 : 1;
     if (depth === 0) return [open.index, m.index + m[0].length];
   }
-  throw new Error('unbalanced <div id="home-page">');
+  // Not closed in the source (some pages): the browser closes it at </body>.
+  const body = src.toLowerCase().indexOf('</body>', open.index);
+  return [open.index, body > 0 ? body : src.length];
 }
 
 function headTags(page, head, markdown) {
@@ -463,7 +494,7 @@ function headersFile(docs) {
 // ---------------------------------------------------------------- render
 
 async function render() {
-  const pages = await config.pages({ directus, htmlToText, summary, canonicalUrl, md });
+  const pages = await config.pages({ directus, htmlToText, summary, canonicalUrl, md, mdFrom });
   const previous = await readManifest();
   // While rendering, earlier output must not be served: detail URLs fall
   // through to their template, single pages are served from the pristine copy.
@@ -485,22 +516,29 @@ async function render() {
   try {
     for (const page of pages) {
       const templatePath = page.inPlace ? overrides.get(page.file) : path.join(ROOT, page.template);
-      const source = await readFile(templatePath, 'utf8');
+      let source = await readFile(templatePath, 'utf8');
+      if (page.transformSource) source = page.transformSource(source);
       let rendered = null;
       let state = page.state || {};
       if (page.seed) {
-        rendered = await snapshot(browser, base + encodeURI(page.path), page, source);
+        // renderUrl: where the page's own JS can load this page's data (see the config).
+        rendered = await snapshot(browser, base + (page.renderUrl || encodeURI(page.path)), page, source);
         state = rendered.state;
+        // Optional: drop data the template does not use (--verify checks the result).
+        if (page.pruneSeed) rendered.seed = page.pruneSeed(rendered.seed);
+        // Optional: adjust the static markup, e.g. hide what a script hides on load.
+        if (page.postRender) rendered.html = page.postRender(rendered.html);
       }
       let markdown = null;
       if (page.markdown) {
         markdownBase = canonicalUrl(page.path);
-        markdown = markdownPage(page, page.markdown(state));
+        markdown = markdownPage(page, page.markdown(state, { html: rendered && rendered.html }));
         markdown.canonical = canonicalUrl(page.path);
+        await mkdir(path.dirname(path.join(ROOT, markdown.file)), { recursive: true });
         await writeFile(path.join(ROOT, markdown.file), markdown.text);
         docs.push(markdown);
       }
-      const html = buildPage(source, page, rendered, page.head(state), markdown);
+      const html = buildPage(source, page, rendered, page.head(state, { html: rendered && rendered.html }), markdown);
       await mkdir(path.dirname(path.join(ROOT, page.file)), { recursive: true });
       await writeFile(path.join(ROOT, page.file), html);
       if (page.lastmodFrom) page.lastmod = page.lastmodFrom(state);
@@ -532,6 +570,7 @@ async function render() {
     note: 'Written by scripts/prerender.mjs. inPlace pages are rendered from scripts/templates/<file>.tpl.',
     pages: pages.map((p) => ({
       path: p.path, file: p.file, inPlace: Boolean(p.inPlace), prerendered: Boolean(p.seed), markdown: p.markdownFile || undefined,
+      markupNotCompared: p.markupNotCompared || undefined,
     })),
   };
   await writeFile(MANIFEST, JSON.stringify(manifest, null, 2) + '\n');
@@ -579,19 +618,33 @@ async function verify() {
         });
         await tab.goto(url, { waitUntil: 'networkidle0', timeout: 120000 });
         await new Promise((r) => setTimeout(r, 500));
+        // Raw markup, and the markup after one more pass through the HTML parser:
+        // CMS HTML such as a <p> inside a <p> can exist in a live DOM but is split
+        // when the same markup is parsed from the page source.
         const dom = await tab.evaluate(() => {
           const el = document.getElementById('home-page');
-          return el ? el.outerHTML : '';
+          if (!el) return { raw: '', parsed: '' };
+          const doc = new DOMParser().parseFromString(`<body>${el.outerHTML}</body>`, 'text/html');
+          return { raw: el.outerHTML, parsed: doc.body.innerHTML };
         });
         const count = await tab.evaluate(() => (document.body.innerText || '').split(/\s+/).filter(Boolean).length);
         await tab.close();
         return { dom, apiCalls, errors, words: count };
       };
+      if (page.markupNotCompared) {
+        const live = await read(true);
+        if (live.apiCalls) failures += 1;
+        console.log(`${live.apiCalls ? 'FAIL ' : 'ok   '} ${page.path}  markup not compared (${page.markupNotCompared}); ` +
+          `${live.apiCalls} CMS data requests; words: ${live.words} in Chrome, ${mdWords} in Markdown; JSON-LD ${types.join(', ')}`);
+        continue;
+      }
       const plain = await read(false);
       const live = await read(true);
-      const same = plain.dom.length > 0 && plain.dom === live.dom;
+      const identical = plain.dom.raw.length > 0 && plain.dom.raw === live.dom.raw;
+      const same = identical || (plain.dom.parsed.length > 0 && plain.dom.parsed === live.dom.parsed);
       if (!same || live.apiCalls) failures += 1;
-      console.log(`${same && !live.apiCalls ? 'ok   ' : 'FAIL '} ${page.path}  ${same ? 'same markup' : 'MARKUP DIFFERS'} with JS on; ` +
+      const markup = identical ? 'same markup' : same ? 'same markup after HTML parsing' : 'MARKUP DIFFERS';
+      console.log(`${same && !live.apiCalls ? 'ok   ' : 'FAIL '} ${page.path}  ${markup} with JS on; ` +
         `${live.apiCalls} CMS data requests; words: ${plain.words} without JS, ${live.words} in Chrome, ${mdWords} in Markdown; ` +
         `JSON-LD ${types.join(', ')}` + (live.errors.length ? `; page errors: ${live.errors.slice(0, 2).join(' | ')}` : ''));
     }
